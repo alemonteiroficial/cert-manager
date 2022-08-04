@@ -1,4 +1,4 @@
-az aks get-credentials --resource-group hlg-containers --name hlg-containers-aks1
+az aks get-credentials --resource-group [name] --name [container-name]
 
 /alexandre# kubectl config current-context
 hlg-containers-aks1
@@ -53,13 +53,13 @@ ingress-nginx-controller-54d587fbc6-p4mzq   1/1     Running   0          3m20s
 
 alexandre# kubectl get svc -n ingress-basic
 NAME                                 TYPE           CLUSTER-IP    EXTERNAL-IP      PORT(S)                      AGE
-ingress-nginx-controller             LoadBalancer   10.0.56.114   20.241.163.118   80:31152/TCP,443:30947/TCP   4m44s
-ingress-nginx-controller-admission   ClusterIP      10.0.86.88    <none>           443/TCP                      4m44s
+ingress-nginx-controller             LoadBalancer   0.0.0.xxx    0.0.0.xxx   80:31152/TCP,443:30947/TCP   4m44s
+ingress-nginx-controller-admission   ClusterIP      0.0.0.xxx     <none>           443/TCP                      4m44s
 
 https://docs.microsoft.com/en-us/azure/aks/ingress-tls?tabs=azure-powershell#method-1-set-the-dns-label-using-the-azure-cli
 ####### Config DNSNAME
-  264  export IP="20.241.163.118"
-  265  export DNSNAME="neo-nginx"
+  264  export IP="0.0.0.xxx "
+  265  export DNSNAME="company-nginx"
   266  PUBLICIPID=$(az network public-ip list --query "[?ipAddress!=null]|[?contains(ipAddress, '$IP')].[id]" --output tsv)
   267  export PUBLICIPID=$(az network public-ip list --query "[?ipAddress!=null]|[?contains(ipAddress, '$IP')].[id]" --output tsv)
   268  echo PUBLICIPID
@@ -68,7 +68,7 @@ https://docs.microsoft.com/en-us/azure/aks/ingress-tls?tabs=azure-powershell#met
   271  az network public-ip show --ids $PUBLICIPID --query "[dnsSettings.fqdn]" --output tsv
   
 alexandre# az network public-ip show --ids $PUBLICIPID --query "[dnsSettings.fqdn]" --output tsv
-neo-nginx.eastus.cloudapp.azure.com
+company-nginx.eastus.cloudapp.azure.com
 
 C:\Users\alexandremonteiro\Documents\GitHub\cert-manager> kubectl apply -f .\cluster-issuer.yaml
 
