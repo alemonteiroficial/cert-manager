@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: company-nginx-ingress
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    cert-manager.io/cluster-issuer: "letsencrypt-hlog"
+spec:
+  tls:
+  - hosts:
+    - company-nginx.eastus.cloudapp.azure.com
+    secretName: echo-tls  
+  rules:
+  - host: company-nginx.eastus.cloudapp.azure.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: company-nginx
+            port:
+              number: 80
